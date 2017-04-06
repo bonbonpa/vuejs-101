@@ -115,20 +115,25 @@
 
 <div id="app">
 	<form method="post" action="/">
-		<label for="email">Email</label> <input type="email" :value="email" id="email">
+		<!--<label for="email">Email</label> <input type="email" :value="email" id="email">-->
+		<label for="email">Email</label> <input type="email" v-model.lazy="email" id="email">
+		
 		<fieldset>
 			<legend>Interests</legend>
 			<div>
-				<input type="checkbox" value="Running"> Running
+				<input v-model="selectedInterest" type="checkbox" value="Running"> Running
 			</div>
 			<div>
-				<input type="checkbox" value="Cycling"> Cycling
+				<input v-model="selectedInterest" type="checkbox" value="Cycling"> Cycling
 			</div>
 			<div>
-				<input type="checkbox" value="Swimming"> Swimming
+				<input v-model="selectedInterest" type="checkbox" value="Swimming"> Swimming
 			</div>
 		</fieldset>
 		<input type="submit" value="Subscribe">
+		<p>Your email {{email}}.</p>
+		
+		<p>You selected : {{selectedInterest.join(', ')}}</p>
 	</form>
 </div>
 
@@ -136,7 +141,8 @@
 	var vm = new Vue({
 	   el: '#app',
 	   data: {
-		   email: 'mike@example.com'
+		   email: '',
+		   selectedInterest : []
 	   }
 	});
 </script>
