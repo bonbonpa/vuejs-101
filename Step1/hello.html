@@ -13,15 +13,16 @@
         <h1>{{msg}}</h1>
         <!--NOT ALLOWED<a href="{{url}}">Home</a>-->
         <a v-bind:href="url + '?myParam=1'">Home</a>
+         <p>
+            <form action="">
+                Name : <input type="text" :value="name" >
+            </form>
+        </p>
     </div>
-    <p>
-        <form action="">
-            Name : <input type="text" :value="name" >
-        </form>
-    </p>
+   
 </body>
 <script>
-    new Vue({
+   var vm =  new Vue({
         el : '#app',
         data : {
             msg : 'Hello Vue my Artdvp',
