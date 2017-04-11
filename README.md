@@ -11,7 +11,7 @@
 
 
 
-### Data binding 
+### 1-1 Data binding 
 
 ```js
 <body>
@@ -41,7 +41,7 @@
 //bind dom -> vm.name = 'aaa'
 ```
 
-### Two way Data binding
+### 1-2 Two way Data binding
 
 ```html
 www.hplsusport.com
@@ -84,7 +84,7 @@ www.hplsusport.com
 //lazy is unbound focus
 ```
 
-## Applying control logic
+### 1-3 Applying control logic
 
 subscribe.html
 
@@ -184,7 +184,7 @@ subscribe.html
         
 ```
 
-## Event handling
+### 1-4 Event handling
 
 login.html
 ```html
@@ -242,7 +242,7 @@ login.html
 </script>
 ```
 
-## Binding to the style attribute
+### 1-5 Binding to the style attribute
 
 ```html
 <script src="https://unpkg.com/vue@2.1.10/dist/vue.js"></script>
@@ -320,8 +320,105 @@ login.html
 </script>
 ```
 
+### 1-6 Binding to the class atrribute
+
+```html
+<!DOCTYPE html>
+
+<script type="text/javascript" src="https://unpkg.com/vue@2.1.10/dist/vue.js"></script>
+
+<div id="app">
+    <div class="square" :class="{ blue : cold , red : hot }"></div>
+    <div :class="cssClassess"></div>
+    <div :class="[squareClass , bgColorClass , { 'dashed-border' : selected }]"></div>
+    <input type="checkbox" name="" v-model="selected"/> selected
+    <input type="text" v-model="bgColorClass">
+</div>
+
+<script>
+    var vm = new Vue({
+       el: '#app',
+       data: {
+           cold : true,
+           hot : false,
+           cssClassess : {
+               square : true,
+               'dashed-border' : true,
+               blue : false
+           },
+           squareClass : 'square',
+           bgColorClass : 'red',
+           selected : false
+       },
+       method : {
+           setSquare : function(){
+                this.selected = true;
+        }
+       }
+    });
+</script>
+
+<style>
+    .square {
+         width: 200px;
+         height: 200px;
+         margin-bottom: 20px;
+    }
+    .blue {
+        background-color: blue;
+    }
+    .red {
+        background-color: red;
+    }
+	.yellow {
+        background-color: yellow;
+    }
+    .dashed-border {
+        border: dashed 4px black;
+    }
+</style>
+```
+
+
+### 2-1 Understanding reactive properties
+
+```js
+Constructor Parameter
+
+{
+    data:{
+        firstName:''
+    }
+}
+
+Vue Instance 
+get firstName(){
+    /*
+    Register this property and watch
+    for changes so we can react.
+    Return the value
+    */
+}
+set firstName(){
+    /*
+    Update the value.
+    Re0render any elements that use it.
+    */
+    }
+
+Virtual DOM Update
+When the vitual DOM Chnages
+- Compare it to the previous version ("diff" them)
+- Identify the components that need to be re-rendered
+- Determine the most efficient way to update the actual DOM and apply the updates.
+```
+
+```html
+
+```
+
 Ref 
 - http://tutorialzine.com/2016/08/building-your-first-app-with-vue-js/
 - https://medium.com/codingthesmartway-com-blog/vue-js-2-vue-resource-real-world-vue-application-with-external-api-access-c3de83f25c00
 - https://scotch.io/tutorials/build-a-to-do-app-with-vue-js-2
-- 
+- https://laracasts.com/series/learn-vue-2-step-by-step
