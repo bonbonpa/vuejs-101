@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+
+<script type="text/javascript" src="https://unpkg.com/vue@2.1.10/dist/vue.js"></script>
+
+<div id="app">
+    <p>
+        {{firstName}} {{lastName}}
+    </p>
+    <div v-for="item in framework">{{item}}</div>
+    <p>{{browser.name}} {{browser.version}}</p>
+</div>
+
+<script>
+    var vm = new Vue({
+       el: '#app',
+       data: {
+            firstName: 'Mike',
+            lastName : '',
+            framework : ['Ember','Angular','React'],
+            browser : {
+                name : 'Google Chrome'
+            }
+       }
+    });
+    vm.lastName = 'SSSSS';
+    //in console
+    //Vue.set(vm.browser, 'version' , 55)
+    //Vue.delete(vm.framework,1)
+</script>
