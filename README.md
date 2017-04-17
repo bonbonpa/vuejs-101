@@ -1,15 +1,13 @@
 
-     ,-----.,--.                  ,--. ,---.   ,--.,------.  ,------.
-    '  .--./|  | ,---. ,--.,--. ,-|  || o   \  |  ||  .-.  \ |  .---'
-    |  |    |  || .-. ||  ||  |' .-. |`..'  |  |  ||  |  \  :|  `--, 
-    '  '--'\|  |' '-' ''  ''  '\ `-' | .'  /   |  ||  '--'  /|  `---.
-     `-----'`--' `---'  `----'  `---'  `--'    `--'`-------' `------'
-    ----------------------------------------------------------------- 
 
 
-## Vue JS lynda App
 
 
+# NotNdinG : Vue.js with Lynda.com
+
+source : [Learning Vue.js with Lynda.com](https://www.lynda.com/JavaScript-tutorials/Learning-Vue-js/562924-2.html#tab) 
+
+## 1. Vue Fundamentals
 
 ### 1-1 Data binding 
 
@@ -379,6 +377,7 @@ login.html
 </style>
 ```
 
+## 2. Features of a Vue Instance
 
 ### 2-1 Understanding reactive properties
 
@@ -414,7 +413,280 @@ When the vitual DOM Chnages
 ```
 
 ```html
+<div id="app">
+    <p>
+        {{firstName}} {{lastName}}
+    </p>
+    <div v-for="item in framework">{{item}}</div>
+    <p>{{browser.name}} {{browser.version}}</p>
+</div>
 
+<script>
+    var vm = new Vue({
+       el: '#app',
+       data: {
+            firstName: 'Mike',
+            lastName : '',
+            framework : ['Ember','Angular','React'],
+            browser : {
+                name : 'Google Chrome'
+            }
+       }
+    });
+    vm.lastName = 'SSSSS';
+    //in console
+   
+    //vm.framework[2]
+    //>"React"
+    //vm.framework[3] = "Vue";
+    //>"Vue"
+    //vm.framework.push('Vue');
+    //>5
+    
+    //Vue.set(vm.browser, 'version' , 55)
+    //Vue.delete(vm.framework,1)
+    //
+</script>
+```
+
+### 2-2 Adding computed properties
+
+```html
+<div id="app">
+    <!--{{firstName}} {{lastName}}-->
+    <div>
+        <input type="number" v-model.number.lazy="tempFarenheit">
+        <!--Temperature in Celsius  : {{Math.round(5/9 * tempFarenheit -32 )}}-->
+         Temperature in Celsius  : {{ tempCelsius }}
+         <br>
+          <!--Temperature in Celsius  : {{ tempCelsiusFunc() }}-->
+    </div>
+</div>
+
+<script>
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            firstName: 'Mike',
+            lastName: 'Sullivan',
+            //fullName : this.firstName + ' ' + this.lastName 
+            tempFarenheit : 0 
+       },
+       computed : {
+           tempCelsius : function(){
+               return Math.round(5/9 * (this.tempFarenheit - 32)) ;
+           }
+           //computed call when rerender
+       },
+       methods : {
+           tempCelsiusFunc : function(){
+               return Math.round(5/9 * (this.tempFarenheit - 32)) ;
+           }
+       }
+       //methods not call when rerender
+    });
+</script>
+```
+
+### 2-3 Adding watchers
+
+```html
+<div id="app">
+    Got a question for our virtual agent? Just ask!
+    <input type="text" v-model="question">
+    {{response}}
+    <ul>
+        <li v-for="product in products">{{product.name}}</li>
+    </ul>
+</div>
+
+<script>
+    vm = new Vue({
+        el: '#app',
+        data: {
+            question: '',
+            response: '',
+            products : []
+        },
+        // computed : {
+        //   products : function(){
+        //       //this needs to return a value immediately, can't wait for Ajax response
+        //   }  
+        // },
+        watch : {
+            question : function(newValue){
+                if(newValue.indexOf('products') > -1)
+                {
+                    this.response = 'Sure, I can list the products for you';
+                    $.getJSON('https://hplussport.com/api/products')
+                    .done(function(data){
+                        vm.products = data ;
+                    });
+                }
+                else
+                {
+                    this.response = "Sorry, I don't understand that question.";
+                    this.products = [];
+                }
+            }
+            // watch run asynchronous task
+        }
+    });
+</script>
+```
+
+### 2-4 Using lifecycle hooks
+
+#### Available Hooks
+
+**beforeCreate**
+- Before instance initialization
+
+**Created**
+- Reactive properties configured; instance not yet mounted
+
+**beforeMount**
+- Template complied; ready to be inserted in DOM
+
+**Mounted** 
+- Template inserted in DOM, replacing "el" element
+
+**beforeUpdate**
+- Data changed; update pending
+
+**Upddated**
+- Re-rendered to reflect changes
+
+**beforeDestroy**
+- vm.$destroy() call
+
+**Destroyed**
+- Watchers and event handlers removed; no reactivity
+
+
+```html
+   <div id="app">
+                    Got a question for our virtual agent? Just ask!
+                    <input type="text" v-model="question"> {{response}}
+                    <ul>
+                        <li v-for="product in products">{{product.name}}</li>
+                    </ul>
+                </div>
+
+                <script>
+                    var vm = new Vue({
+                        el: '#app',
+                        data: {
+                            question: '',
+                            response: '',
+                            products: []
+                        },
+                        beforeCreate: function() {
+                            console.log('beforeCreate');
+                        },
+                        created: function() {
+                            console.log('created');
+                            this.question = 'A default question about products?';
+                        },
+                        beforeMount: function() {
+                            console.log('beforeMount');
+                        },
+                        mounted: function() {
+                            console.log('mounted');
+                        },
+                        beforeUpdate: function() {
+                            console.log('beforeUpdate');
+                        },
+                        updated: function() {
+                            console.log('updated');
+                        },
+                        beforeDestroy: function() {
+                            console.log('beforeDestroy');
+                        },
+                        destroyed: function() {
+                            console.log('destroyed');
+                        },
+                        watch: {
+                            question: function(newValue) {
+                                if (newValue.indexOf('products') > -1) {
+                                    console.log('API call');
+                                    this.response = "Sure, I can list the products for you.";
+                                    $.getJSON('https://hplussport.com/api/products')
+                                        .done(function(data) {
+                                            console.log('API response');
+                                            vm.products = data;
+                                        });
+                                }
+                                else {
+                                    this.response = "Sorry, I don't understand this question.";
+                                    this.products = [];
+                                }
+                            }
+                        }
+                    });
+                    
+                    //vm.$destroy();
+                    
+                </script>
+
+
+```
+
+## 3. Vue Components
+
+### 3-1 Registering and using components
+
+```html
+<div id="app">
+    <global-component></global-component>
+    <local-component></local-component>
+    <local-component></local-component>
+</div>
+
+<script>
+    Vue.component('global-component',{
+        template : '<div> a global component</div>'
+    });
+    var LocalComponent = { 
+        // template : '<div @click="showNum()">a local component <div>The number {{num}}</div></div>',
+        template : '<div @click="showNum()">a local component </div>',
+        data : function(){
+            return {
+                num : Math.random()
+            };
+        },
+        methods:{
+            showNum : function()
+            {
+                alert('My number is '+ this.num);
+            }
+        }
+        
+    };
+    new Vue({
+       el: '#app',
+       data: {
+           num: 42
+       },
+       components : {'local-component' : LocalComponent}
+    });
+</script>
+
+<style>
+    div#app {
+        border: none;
+    }
+    div {
+        border: solid 2px black;
+        margin-bottom: 20px;
+        padding: 10px;
+    }
+</style>
+```
+
+### 3-2 Using component props
+
+```html
 ```
 
 Ref 

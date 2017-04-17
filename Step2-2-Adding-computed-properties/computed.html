@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+
+<script type="text/javascript" src="https://unpkg.com/vue@2.1.10/dist/vue.js"></script>
+<div id="app">
+    <!--{{firstName}} {{lastName}}-->
+    <div>
+        <input type="number" v-model.number.lazy="tempFarenheit">
+        <!--Temperature in Celsius  : {{Math.round(5/9 * tempFarenheit -32 )}}-->
+         Temperature in Celsius  : {{ tempCelsius }}
+         <br>
+          <!--Temperature in Celsius  : {{ tempCelsiusFunc() }}-->
+    </div>
+</div>
+
+<script>
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            firstName: 'Mike',
+            lastName: 'Sullivan',
+            //fullName : this.firstName + ' ' + this.lastName 
+            tempFarenheit : 0 
+       },
+       computed : {
+           tempCelsius : function(){
+               return Math.round(5/9 * (this.tempFarenheit - 32)) ;
+           }
+           //computed call when rerender
+       },
+       methods : {
+           tempCelsiusFunc : function(){
+               return Math.round(5/9 * (this.tempFarenheit - 32)) ;
+           }
+       }
+       //methods not call when rerender
+    });
+</script>
