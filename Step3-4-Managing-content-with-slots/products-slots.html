@@ -119,7 +119,8 @@
 
                 <div id="app">
                     <product-list the-title="Shop our award-winning product line" :products="theProducts">
-                        <!--<p>Whare will this element appear?</p>-->
+                        <p slot="top">All items on sale now!</p>
+                        <em slot="bottom">Limited availability order soon.</em>
                     </product-list>
                 </div>
 
@@ -127,10 +128,11 @@
                     Vue.component('product-list', {
                         template: '<div class="product-list">\
                         <h2>{{theTitle}}</h2>\
-                        <slot>Watch this space for message!</slot>\
+                        <slot name="top">Watch this space for message!</slot>\
                         <ul>\
                             <product-list-item v-for="product in products" :product="product">\
                             </product-list-item>\
+                            <li><slot name="bottom"></slot></li>\
                         </ul>\
                     </div>',
                         props: ['theTitle', 'products']
