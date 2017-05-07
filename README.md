@@ -747,6 +747,95 @@ var vm = new Vue({
 </style>
 ```
 
+#### 3-3 Composing and swapping components
+
+```html
+ <script type="text/javascript" src="https://unpkg.com/vue@2.1.10/dist/vue.js"></script>
+
+                <div id="app">
+                    <!--<product-list :products="theProducts" the-title="Shop our award-winning product line"></product-list>-->
+                    <button v-if="listType == 'product-list'" @click="listType = 'product-list-simple'">Show less detail</button>
+                    <button v-else @click="listType = 'product-list'">Show more detail</button>
+                    <component :is="listType" :products="theProducts" the-title="Shop our award-winning product line"></component>
+                </div>
+
+                <script>
+                    Vue.component('product-list', {
+                        template: '<div class="product-list">\
+                                    <h2>{{theTitle}}</h2>\
+                                    <ul>\
+                                        <product-list-item v-for="product in products" :product="product">\
+                                        </product-list-item>\
+                                    </ul>\
+                                </div>',
+                        props: ['theTitle', 'products']
+                    });
+
+                    Vue.component('product-list-simple', {
+                        template: '<div class="product-list">\
+                                    <h2>{{theTitle}}</h2>\
+                                    <ul>\
+                                       <li v-for="product in products">\
+                                        <img :src="product.image" class="small">{{product.name}}\
+                                        </li>\
+                                    </ul>\
+                                </div>',
+                        props: ['theTitle', 'products']
+                    });
+
+                    Vue.component('product-list-item', {
+                        template: '<li>\
+                            <img :src="product.image">\
+                            <p><strong>{{product.name}}</strong></p>\
+                            <p>{{product.description}}</p>\
+                        </li>',
+                        props: ['product']
+                    });
+
+                    var vm = new Vue({
+                        el: '#app',
+                        data: {
+                            theProducts: [],
+                            listType: 'product-list'
+                        },
+                        created: function() {
+                            $.getJSON('https://hplussport.com/api/products')
+                                .done(function(data) {
+                                    vm.theProducts = data;
+                                });
+                        }
+                    });
+                </script>
+
+                <style>
+                    .product-list h2 {
+                        margin-bottom: 40px;
+                    }
+                    
+                    .product-list ul img {
+                        float: left;
+                        width: 300px;
+                    }
+                    
+                    .product-list ul {
+                        list-style-type: none;
+                    }
+                    
+                    .product-list li {
+                        margin-bottom: 40px;
+                        clear: both;
+                    }
+                    
+                    .product-list img.small {
+                        width: 100px;
+                    }
+                    
+                    .product-list img.small {
+                        width: 100px;
+                    }
+                </style>
+```
+
 Ref 
 - http://tutorialzine.com/2016/08/building-your-first-app-with-vue-js/
 - https://medium.com/codingthesmartway-com-blog/vue-js-2-vue-resource-real-world-vue-application-with-external-api-access-c3de83f25c00
