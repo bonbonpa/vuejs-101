@@ -122,6 +122,11 @@
                         <p slot="top">All items on sale now!</p>
                         <em slot="bottom">Limited availability order soon.</em>
                     </product-list>
+                    <product-list-flexible :products="theProducts" the-title="Custom layout">
+                        <template scope="props">
+                            <strong>{{props.product.name}} </strong> - {{props.product.description}}
+                        </template>
+                    </product-list-flexible>
                 </div>
 
                 <script>
@@ -133,6 +138,18 @@
                             <product-list-item v-for="product in products" :product="product">\
                             </product-list-item>\
                             <li><slot name="bottom"></slot></li>\
+                        </ul>\
+                    </div>',
+                        props: ['theTitle', 'products']
+                    });
+
+                    Vue.component('product-list-flexible', {
+                        template: '<div class="product-list">\
+                        <h2>{{theTitle}}</h2>\
+                        <ul>\
+                           <li v-for="product in products">\
+                            <slot :product="product"></slot>\
+                           </li>\
                         </ul>\
                     </div>',
                         props: ['theTitle', 'products']
