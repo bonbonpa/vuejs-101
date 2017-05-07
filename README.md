@@ -688,6 +688,63 @@ When the vitual DOM Chnages
 ### 3-2 Using component props
 
 ```html
+<script type="text/javascript" src="https://unpkg.com/vue@2.1.10/dist/vue.js"></script>
+
+<div id="app">
+    <product-list :products="theProducts" the-title="Shop our award-winning product line"></product-list>
+</div>
+
+<script>
+//------------------------------------
+Vue.component('product-list', 
+{
+    template: `
+        <div class="product-list"> <h2>{{theTitle}}</h2> 
+            <ul>
+                <li v-for="product in products">
+                    <img :src="product.image">
+                    <p><strong>{{product.name}}</strong></p>
+                    <p>{{product.image_title}}</p>
+                </li>
+            </ul>
+        </div>`,
+    props: ['theTitle', 'products'] //---- props
+});
+
+var vm = new Vue({
+    el: '#app',
+    data: {
+        theProducts: []
+    },
+    created: function() {
+        $.ge('https://hplussport.com/api/products')
+            .done(function(data) {
+                vm.theProducts = data;
+                console.log(data);
+            });
+    }
+});
+</script>
+
+<style>
+    .product-list h2 {
+        margin-bottom: 40px;
+    }
+                    
+    .product-list ul img {
+        float: left;
+        width: 300px;
+    }
+                    
+    .product-list ul {
+        list-style-type: none;
+    }
+                    
+    .product-list li {
+        margin-bottom: 40px;
+        clear: both;
+    }
+</style>
 ```
 
 Ref 
