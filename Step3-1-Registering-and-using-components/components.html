@@ -9,31 +9,32 @@
 </div>
 
 <script>
-    Vue.component('global-component',{
-        template : '<div> a global component</div>'
+    Vue.component('global-component', {
+        template: '<div> a global component</div>'
     });
-    var LocalComponent = { 
+    var LocalComponent = {
         // template : '<div @click="showNum()">a local component <div>The number {{num}}</div></div>',
-        template : '<div @click="showNum()">a local component </div>',
-        data : function(){
+        template: '<div @click="showNum()">a local component name </div>',
+        data: function() {
             return {
-                num : Math.random()
+                num: Math.random()
             };
         },
-        methods:{
-            showNum : function()
-            {
-                alert('My number is '+ this.num);
+        methods: {
+            showNum: function() {
+                alert('My number is ' + this.num);
             }
         }
-        
+
     };
     new Vue({
-       el: '#app',
-       data: {
-           num: 42
-       },
-       components : {'local-component' : LocalComponent}
+        el: '#app',
+        data: {
+            num: 42
+        },
+        components: {
+            'local-component': LocalComponent
+        }
     });
 </script>
 
@@ -41,6 +42,7 @@
     div#app {
         border: none;
     }
+    
     div {
         border: solid 2px black;
         margin-bottom: 20px;
