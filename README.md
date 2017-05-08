@@ -40,6 +40,8 @@ c9 link : [c9.io](https://ide.c9.io/isphins/vue)
 //bind dom -> vm.name = 'aaa'
 ```
 
+link : [demo 1-1 Data binding](https://bonbonpa.github.io/vuejs-101/Step1-1-Data-binding/hello.html)
+
 ### 1-2 Two way Data binding
 
 ```html
@@ -82,7 +84,7 @@ www.hplsusport.com
 </script>
 //lazy is unbound focus
 ```
-
+link : [demo 1-2 Two way Data binding](https://bonbonpa.github.io/vuejs-101/Step1-2-Two-way-databinding/h_plus_sport/subscribe.html)
 ### 1-3 Applying control logic
 
 subscribe.html
@@ -182,7 +184,7 @@ subscribe.html
 </script>
         
 ```
-
+link [demo 1-3 Applying control logic](https://bonbonpa.github.io/vuejs-101/Step1-3-Applying-control-logic/h_plus_sport/subscribe.html)
 ### 1-4 Event handling
 
 login.html
@@ -240,6 +242,8 @@ login.html
     });
 </script>
 ```
+
+link : [demo 1-4 Event handling](https://bonbonpa.github.io/vuejs-101/Step1-4-Event-handling/h_plus_sport/login.html)
 
 ### 1-5 Binding to the style attribute
 
@@ -318,7 +322,7 @@ login.html
     });
 </script>
 ```
-
+link : [demo 1-5 Binding to the style attribute](https://bonbonpa.github.io/vuejs-101/Step1-5-Binding-to-the-style-attribute/style.html)
 ### 1-6 Binding to the class atrribute
 
 ```html
@@ -377,7 +381,7 @@ login.html
     }
 </style>
 ```
-
+link: [demo 1-6 Binding to the class atrribute](https://bonbonpa.github.io/vuejs-101/Step1-6-Binding-to-the-class-attribute/class.html)
 ## 2. Features of a Vue Instance
 
 ### 2-1 Understanding reactive properties
@@ -449,7 +453,7 @@ When the vitual DOM Chnages
     //
 </script>
 ```
-
+link : [demo 2-1 Understanding reactive properties](https://bonbonpa.github.io/vuejs-101/Step2-1-Understanding-reactive-properties/reactive.html)
 ### 2-2 Adding computed properties
 
 ```html
@@ -488,7 +492,7 @@ When the vitual DOM Chnages
     });
 </script>
 ```
-
+link : [demo 2-2 Adding computed properties](https://bonbonpa.github.io/vuejs-101/Step2-2-Adding-computed-properties/computed.html)
 ### 2-3 Adding watchers
 
 ```html
@@ -535,7 +539,7 @@ When the vitual DOM Chnages
     });
 </script>
 ```
-
+link : [demo 2-3 Adding watchers](https://bonbonpa.github.io/vuejs-101/Step2-3-Adding-watchers/virtual-agent.html)
 ### 2-4 Using lifecycle hooks
 
 #### Available Hooks
@@ -632,7 +636,7 @@ When the vitual DOM Chnages
 
 
 ```
-
+link : [demo 2-4 Using lifecycle hooks](https://bonbonpa.github.io/vuejs-101/Step2-4-Using-lifecyclehooks/lifecycle.html)
 ## 3. Vue Components
 
 ### 3-1 Registering and using components
@@ -684,7 +688,7 @@ When the vitual DOM Chnages
     }
 </style>
 ```
-
+link : [demo 3-1 Registering and using components]()
 ### 3-2 Using component props
 
 ```html
@@ -746,7 +750,7 @@ var vm = new Vue({
     }
 </style>
 ```
-
+link : [demo 3-2 Using component props](https://bonbonpa.github.io/vuejs-101/Step3-2-Using-component-props/products.html)
 #### 3-3 Composing and swapping components
 
 ```html
@@ -835,7 +839,7 @@ var vm = new Vue({
                     }
                 </style>
 ```
-
+link : [demo 3-3 Composing and swapping components](https://bonbonpa.github.io/vuejs-101/Step3-3-Composing-and-swapping-components/products.html)
 #### 3-4 Managing-content-withs-slots
 
 ```html
@@ -902,6 +906,8 @@ var vm = new Vue({
                     });
                 </script>
 ```
+
+link : [demo 3-4 Managing-content-withs-slots](Step3-4-Managing-content-with-slots/products-slots.html)
 
 Ref 
 - http://tutorialzine.com/2016/08/building-your-first-app-with-vue-js/
