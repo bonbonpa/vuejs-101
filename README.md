@@ -836,6 +836,73 @@ var vm = new Vue({
                 </style>
 ```
 
+#### 3-4 Managing-content-withs-slots
+
+```html
+           <script type="text/javascript" src="https://unpkg.com/vue@2.1.10/dist/vue.js"></script>
+
+                <div id="app">
+                    <product-list the-title="Shop our award-winning product line" :products="theProducts">
+                        <p slot="top">All items on sale now!</p>
+                        <em slot="bottom">Limited availability order soon.</em>
+                    </product-list>
+                    <product-list-flexible :products="theProducts" the-title="Custom layout">
+                        <template scope="props">
+                            <strong>{{props.product.name}} </strong> - {{props.product.description}}
+                        </template>
+                    </product-list-flexible>
+                </div>
+
+                <script>
+                    Vue.component('product-list', {
+                        template: '<div class="product-list">\
+                        <h2>{{theTitle}}</h2>\
+                        <slot name="top">Watch this space for message!</slot>\
+                        <ul>\
+                            <product-list-item v-for="product in products" :product="product">\
+                            </product-list-item>\
+                            <li><slot name="bottom"></slot></li>\
+                        </ul>\
+                    </div>',
+                        props: ['theTitle', 'products']
+                    });
+
+                    Vue.component('product-list-flexible', {
+                        template: '<div class="product-list">\
+                        <h2>{{theTitle}}</h2>\
+                        <ul>\
+                           <li v-for="product in products">\
+                            <slot :product="product"></slot>\
+                           </li>\
+                        </ul>\
+                    </div>',
+                        props: ['theTitle', 'products']
+                    });
+
+                    Vue.component('product-list-item', {
+                        template: '<li>\
+                    <img :src="product.image">\
+                    <p><strong>{{product.name}}</strong></p>\
+                    <p>{{product.description}}</p>\
+                  </li>',
+                        props: ['product']
+                    });
+
+                    var vm = new Vue({
+                        el: '#app',
+                        data: {
+                            theProducts: []
+                        },
+                        created: function() {
+                            $.getJSON('https://hplussport.com/api/products')
+                                .done(function(data) {
+                                    vm.theProducts = data;
+                                });
+                        }
+                    });
+                </script>
+```
+
 Ref 
 - http://tutorialzine.com/2016/08/building-your-first-app-with-vue-js/
 - https://medium.com/codingthesmartway-com-blog/vue-js-2-vue-resource-real-world-vue-application-with-external-api-access-c3de83f25c00
