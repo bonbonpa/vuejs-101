@@ -912,6 +912,107 @@ link : [demo 3-4 Managing-content-withs-slots](Step3-4-Managing-content-with-slo
 ## 3-5 Handling events with components
 
 ```html
+ <script type="text/javascript" src="https://unpkg.com/vue@2.1.10/dist/vue.js"></script>
+
+                <div id="app">
+                    <product-list :products="theProducts" title="Shop our award-winning product line"></product-list>
+                </div>
+
+                <script>
+                    //     Vue.component('product-list', {
+                    //         template: '<div class="product-list">\
+                    //         <h2>{{title}}</h2>\
+                    //         <ul>\
+                    //             <product-list-item v-for="(product,i) in products" :remove-method="remove.bind(this,i)" :product="product">\
+                    //             </product-list-item>\
+                    //         </ul>\
+                    //     </div>',
+                    //         props: ['products', 'title'],
+                    //         methods: {
+                    //             remove: function(i) {
+                    //                 this.products.splice(i, 1);
+                    //             }
+                    //         }
+                    //     });
+
+                    //     Vue.component('product-list-item', {
+                    //         template: '<li>\
+                    //     <img :src="product.image">\
+                    //     <p><strong>{{product.name}}</strong></p>\
+                    //     <p>{{product.description}}<a @click="removeMethod">Hide this item</a></p>\
+                    // </li>',
+                    //         props: ['product', 'removeMethod']
+                    //     });
+                    Vue.component('product-list', {
+                        template: '<div class="product-list">\
+                        <h2>{{title}}</h2>\
+                        <ul>\
+                            <product-list-item @remove="remove(i)" v-for="(product,i) in products" :product="product">\
+                            </product-list-item>\
+                        </ul>\
+                    </div>',
+                        props: ['products', 'title'],
+                        methods: {
+                            remove: function(i) {
+                                this.products.splice(i, 1);
+                            }
+                        }
+                    });
+
+                    Vue.component('product-list-item', {
+                        template: '<li>\
+                    <img :src="product.image">\
+                    <p><strong>{{product.name}}</strong></p>\
+                    <p>{{product.description}}<a @click="requestRemoval">Hide this item</a></p>\
+                </li>',
+                        props: ['product'],
+                        methods: {
+                            requestRemoval: function() {
+                                this.$emit('remove');
+                            }
+                        }
+                    });
+
+                    var vm = new Vue({
+                        el: '#app',
+                        data: {
+                            theProducts: []
+                        },
+                        created: function() {
+                            $.getJSON('https://hplussport.com/api/products.php?function=products')
+                                .done(function(data) {
+                                    vm.theProducts = data;
+                                });
+                        }
+                    });
+                </script>
+```
+link : [demo 3-5 Handling events with components](3-5-Handling-events-with-components/products-events.html)
+
+## 4-1 Installing vue cli and webpack
+
+- Advantages to Single-File Components
+    1. Syntax highlighting for HTML
+    2. Modern JavaScript(ES6 and beyond) support
+    3. Component-specific (scoped) CSS
+    4. Hot Module Replacement with webpack
+- Webpack and Vue-loader
+- vue-cli (command line interface)
+
+```sh
+$ npm install -g vue-cli
+$ vue init webpack-simple single-file-components
+$ cd single-file-components 
+$ npm install
+```
+
+```
+run in c9
+
+-- package.json
+ "dev": "cross-env NODE_ENV=development webpack-dev-server --host $IP --open --hot" 
+
+```html
 
 ```
 
