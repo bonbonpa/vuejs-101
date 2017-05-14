@@ -1084,7 +1084,69 @@ a {
 
 ```
 
+> some render 
 
+main.js
+```js
+import Vue from 'vue'
+import App from './App.vue'
+
+new Vue({
+    el: '#app',
+    render: h => h(App),
+    components: {
+        app: App
+    }
+})
+```
+
+index.html
+```html
+<body>
+    <div id="app">
+        <app></app>
+    </div>
+    <script src="/dist/build.js"></script>
+</body>
+```
+## 4-3 Converting to single file component
+
+ProductLitItem.vue
+
+```html
+<template>
+    <li>
+        <img :src="product.image">
+        <p><strong>{{product.name}}</strong></p>
+        <p>{{product.description}} <a @click="requestRemoval">Hide this item</a></p>
+    </li>
+</template>
+
+<script>
+    export default{
+        name: 'product-list-item',
+        props: ['product'],
+        methods: {
+            requestRemoval(){
+                this.$emit('remove');
+            }
+        }
+    };
+</script>
+
+<style scoped>
+    img {
+        float: left;
+        width: 300px;
+    }
+     li {
+        margin-bottom: 40px;
+        clear: both;
+    }
+</style>         
+        
+```
+## 4-4 Using single file components
 
 Ref 
 - http://tutorialzine.com/2016/08/building-your-first-app-with-vue-js/
