@@ -909,6 +909,13 @@ link : [demo 3-3 Composing and swapping components](https://bonbonpa.github.io/v
 
 link : [demo 3-4 Managing-content-withs-slots](Step3-4-Managing-content-with-slots/products-slots.html)
 
+## 3-5 Handling events with components
+
+```html
+
+```
+
+
 Ref 
 - http://tutorialzine.com/2016/08/building-your-first-app-with-vue-js/
 - https://medium.com/codingthesmartway-com-blog/vue-js-2-vue-resource-real-world-vue-application-with-external-api-access-c3de83f25c00
