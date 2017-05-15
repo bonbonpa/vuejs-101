@@ -1148,6 +1148,50 @@ ProductLitItem.vue
 ```
 ## 4-4 Using single file components
 
+> move images js css
+
+index.html
+```html
+ <div id="app"></div>
+<script src="/dist/build.js"></script>
+```
+App.vue
+```html
+<template>
+  <product-list :products="theProducts" title="Shop our award-winning product line"></product-list>
+</template>
+
+<script>
+import ProductList from './ProductList.vue';
+
+export default {
+  name: 'app',
+  data() {
+    return {
+       theProducts: []
+    };
+  },
+  components: {
+    'product-list': ProductList 
+  },
+  created: function() {
+        $.getJSON('https://hplussport.com/api/products')
+                .done(data => { this.theProducts = data;});
+                  }
+}
+</script>
+
+```
+
+## 4-5 Installing and configuring the vue-router
+
+install vue-router
+```sh
+$ npm install vue-router --save
+```
+
+## 4-6 Bulidding a simple SPA with the vue-router
+
 Ref 
 - http://tutorialzine.com/2016/08/building-your-first-app-with-vue-js/
 - https://medium.com/codingthesmartway-com-blog/vue-js-2-vue-resource-real-world-vue-application-with-external-api-access-c3de83f25c00
