@@ -1,9 +1,4 @@
-
-
-
-
-
-# NotNdinG : Vue.js with Lynda.com
+# dvp-N : Vue.js with Lynda.com
 
 source : [Learning Vue.js with Lynda.com](https://www.lynda.com/JavaScript-tutorials/Learning-Vue-js/562924-2.html#tab) 
 c9 link : [c9.io](https://ide.c9.io/isphins/vue)
@@ -909,8 +904,465 @@ link : [demo 3-3 Composing and swapping components](https://bonbonpa.github.io/v
 
 link : [demo 3-4 Managing-content-withs-slots](Step3-4-Managing-content-with-slots/products-slots.html)
 
-Ref 
-- http://tutorialzine.com/2016/08/building-your-first-app-with-vue-js/
-- https://medium.com/codingthesmartway-com-blog/vue-js-2-vue-resource-real-world-vue-application-with-external-api-access-c3de83f25c00
-- https://scotch.io/tutorials/build-a-to-do-app-with-vue-js-2
-- https://laracasts.com/series/learn-vue-2-step-by-step
+## 3-5 Handling events with components
+
+```html
+ <script type="text/javascript" src="https://unpkg.com/vue@2.1.10/dist/vue.js"></script>
+
+                <div id="app">
+                    <product-list :products="theProducts" title="Shop our award-winning product line"></product-list>
+                </div>
+
+                <script>
+                    //     Vue.component('product-list', {
+                    //         template: '<div class="product-list">\
+                    //         <h2>{{title}}</h2>\
+                    //         <ul>\
+                    //             <product-list-item v-for="(product,i) in products" :remove-method="remove.bind(this,i)" :product="product">\
+                    //             </product-list-item>\
+                    //         </ul>\
+                    //     </div>',
+                    //         props: ['products', 'title'],
+                    //         methods: {
+                    //             remove: function(i) {
+                    //                 this.products.splice(i, 1);
+                    //             }
+                    //         }
+                    //     });
+
+                    //     Vue.component('product-list-item', {
+                    //         template: '<li>\
+                    //     <img :src="product.image">\
+                    //     <p><strong>{{product.name}}</strong></p>\
+                    //     <p>{{product.description}}<a @click="removeMethod">Hide this item</a></p>\
+                    // </li>',
+                    //         props: ['product', 'removeMethod']
+                    //     });
+                    Vue.component('product-list', {
+                        template: '<div class="product-list">\
+                        <h2>{{title}}</h2>\
+                        <ul>\
+                            <product-list-item @remove="remove(i)" v-for="(product,i) in products" :product="product">\
+                            </product-list-item>\
+                        </ul>\
+                    </div>',
+                        props: ['products', 'title'],
+                        methods: {
+                            remove: function(i) {
+                                this.products.splice(i, 1);
+                            }
+                        }
+                    });
+
+                    Vue.component('product-list-item', {
+                        template: '<li>\
+                    <img :src="product.image">\
+                    <p><strong>{{product.name}}</strong></p>\
+                    <p>{{product.description}}<a @click="requestRemoval">Hide this item</a></p>\
+                </li>',
+                        props: ['product'],
+                        methods: {
+                            requestRemoval: function() {
+                                this.$emit('remove');
+                            }
+                        }
+                    });
+
+                    var vm = new Vue({
+                        el: '#app',
+                        data: {
+                            theProducts: []
+                        },
+                        created: function() {
+                            $.getJSON('https://hplussport.com/api/products.php?function=products')
+                                .done(function(data) {
+                                    vm.theProducts = data;
+                                });
+                        }
+                    });
+                </script>
+```
+link : [demo 3-5 Handling events with components](3-5-Handling-events-with-components/products-events.html)
+
+## 4-1 Installing vue cli and webpack
+
+- Advantages to Single-File Components
+    1. Syntax highlighting for HTML
+    2. Modern JavaScript(ES6 and beyond) support
+    3. Component-specific (scoped) CSS
+    4. Hot Module Replacement with webpack
+- Webpack and Vue-loader
+- vue-cli (command line interface)
+
+```sh
+$ npm install -g vue-cli
+$ vue init webpack-simple single-file-components
+$ cd single-file-components 
+$ npm install
+```
+
+```
+run in c9
+
+-- package.json
+ "dev": "cross-env NODE_ENV=development webpack-dev-server --host $IP --open --hot" 
+$ npm run dev
+```html
+
+```
+
+## 4-2 Understanding the Vue App skeleton
+
+- webpack 
+
+```html
+<template>
+  <div id="app">
+    <img src="./assets/logo.png">
+    <h1>{{ msg }}</h1>
+    <h2>Essential Links</h2>
+    <ul>
+      <li><a href="https://vuejs.org" target="_blank">Core Docs</a></li>
+      <li><a href="https://forum.vuejs.org" target="_blank">Forum</a></li>
+      <li><a href="https://gitter.im/vuejs/vue" target="_blank">Gitter Chat</a></li>
+      <li><a href="https://twitter.com/vuejs" target="_blank">Twitter</a></li>
+    </ul>
+    <h2>Ecosystem</h2>
+    <ul>
+      <li><a href="http://router.vuejs.org/" target="_blank">vue-router</a></li>
+      <li><a href="http://vuex.vuejs.org/" target="_blank">vuex</a></li>
+      <li><a href="http://vue-loader.vuejs.org/" target="_blank">vue-loader</a></li>
+      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank">awesome-vue</a></li>
+    </ul>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'app',
+  data () {
+    return {
+      msg: 'Welcome to Your Vue.js App'
+    }
+  }
+}
+</script>
+
+<style scoped>
+#app {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+}
+
+h1, h2 {
+  font-weight: normal;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  display: inline-block;
+  margin: 0 10px;
+}
+
+a {
+  color: #42b983;
+}
+</style>
+
+```
+
+> some render 
+
+main.js
+```js
+import Vue from 'vue'
+import App from './App.vue'
+
+new Vue({
+    el: '#app',
+    render: h => h(App),
+    components: {
+        app: App
+    }
+})
+```
+
+index.html
+```html
+<body>
+    <div id="app">
+        <app></app>
+    </div>
+    <script src="/dist/build.js"></script>
+</body>
+```
+## 4-3 Converting to single file component
+
+ProductLitItem.vue
+
+```html
+<template>
+    <li>
+        <img :src="product.image">
+        <p><strong>{{product.name}}</strong></p>
+        <p>{{product.description}} <a @click="requestRemoval">Hide this item</a></p>
+    </li>
+</template>
+
+<script>
+    export default{
+        name: 'product-list-item',
+        props: ['product'],
+        methods: {
+            requestRemoval(){
+                this.$emit('remove');
+            }
+        }
+    };
+</script>
+
+<style scoped>
+    img {
+        float: left;
+        width: 300px;
+    }
+     li {
+        margin-bottom: 40px;
+        clear: both;
+    }
+</style>         
+        
+```
+## 4-4 Using single file components
+
+> move images js css
+
+index.html
+```html
+ <div id="app"></div>
+<script src="/dist/build.js"></script>
+```
+App.vue
+```html
+<template>
+  <product-list :products="theProducts" title="Shop our award-winning product line"></product-list>
+</template>
+
+<script>
+import ProductList from './ProductList.vue';
+
+export default {
+  name: 'app',
+  data() {
+    return {
+       theProducts: []
+    };
+  },
+  components: {
+    'product-list': ProductList 
+  },
+  created: function() {
+        $.getJSON('https://hplussport.com/api/products')
+                .done(data => { this.theProducts = data;});
+                  }
+}
+</script>
+
+```
+
+## 4-5 Installing and configuring the vue-router
+
+install vue-router
+```sh
+$ npm install vue-router --save
+```
+main.js
+```js
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+import App from './App.vue'
+import ProductList from './ProductList.vue'
+
+Vue.use(VueRouter);
+
+const routes = [{
+        path: '/',
+        component: ProductList
+    },
+    // {
+    //     path: '/products/:id',
+    //     component: Product
+    // }
+
+];
+
+const router = new VueRouter({
+    routes
+});
+
+new Vue({
+    el: '#app',
+    router,
+    render: h => h(App)
+})
+```
+App.vue
+```html
+<template>
+  <router-view :products="theProducts" title="Shop our award-winning product line"></router-view>
+</template>
+
+<script>
+
+export default {
+  name: 'app',
+  data() {
+    return {
+      theProducts: []
+    };
+  },
+  created: function() {
+      $.getJSON('https://hplussport.com/api/products')
+          .done(data => {this.theProducts = data;});
+  }
+}
+</script>
+```
+## 4-6 Bulidding a simple SPA with the vue-router
+
+Product.vue
+```html
+<template>
+    <div>
+        <h2><strong>{{product.name}}</strong></h2>
+        <router-link to="/products">Back to all products </router-link>
+        <img :src="product.image">
+        <p>{{product.description}} </p>
+        <strong>{{product.rpice}}</strong>
+        <div>
+            <button>Add Cart</button>
+        </div>
+    </div>
+</template>
+
+<script>
+    export default {
+        name: 'product',
+        data() {
+            return {
+                product: {}
+            }
+        },
+        created() {
+            let id = this.$route.params.id;
+            $.getJSON(`https://hplussport.com/api/products/id/${id}`)
+            .done(data => {this.product = data;})
+        }
+    };
+</script>
+
+<style scoped>
+    img {
+        width: 700px;
+        height: 700px;
+    }    
+</style>     
+```
+ProductListItem.vue
+```html
+<template>
+    <li>
+        <img :src="product.image">
+        <p><strong><router-link :to="`/products/${product.id}/`">{{product.name}}</router-link></strong></p>
+        <p>{{product.description}} <a @click="requestRemoval">Hide this item</a></p>
+    </li>
+</template>
+
+<script>
+    export default {
+        name: 'product-list-item',
+        props: ['product'],
+        methods: {
+            requestRemoval() {
+                this.$emit('remove');
+            }
+        }
+    };
+</script>
+
+<style scoped>
+    img {
+        float: left;
+        width: 300px;
+    }
+    li {
+        margin-bottom: 40px;
+        clear: both;
+    }
+</style>     
+```
+App.vue
+```html
+<template>
+  <router-view :products="theProducts" title="Shop our award-winning product line"></router-view>
+</template>
+
+<script>
+
+export default {
+  name: 'app',
+  data() {
+    return {
+      theProducts: []
+    };
+  },
+  created: function() {
+      $.getJSON('https://hplussport.com/api/products')
+          .done(data => {this.theProducts = data;});
+  }
+}
+</script>
+```
+main.js
+```js
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+import App from './App.vue'
+import ProductList from './ProductList.vue'
+import Product from './Product.vue'
+
+Vue.use(VueRouter);
+
+const routes = [{
+        path: '/',
+        redirect: '/products'
+    },
+    {
+        path: '/',
+        component: ProductList
+    },
+    {
+        path: '/products/:id',
+        component: Product
+    }
+];
+
+const router = new VueRouter({
+    routes
+});
+
+new Vue({
+    el: '#app',
+    router,
+    render: h => h(App)
+})
+```
+
