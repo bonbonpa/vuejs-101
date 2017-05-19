@@ -1,9 +1,4 @@
-
-
-
-
-
-# NotNdinG : Vue.js with Lynda.com
+# dvp-N : Vue.js with Lynda.com
 
 source : [Learning Vue.js with Lynda.com](https://www.lynda.com/JavaScript-tutorials/Learning-Vue-js/562924-2.html#tab) 
 c9 link : [c9.io](https://ide.c9.io/isphins/vue)
@@ -1243,12 +1238,131 @@ export default {
 ```
 ## 4-6 Bulidding a simple SPA with the vue-router
 
+Product.vue
+```html
+<template>
+    <div>
+        <h2><strong>{{product.name}}</strong></h2>
+        <router-link to="/products">Back to all products </router-link>
+        <img :src="product.image">
+        <p>{{product.description}} </p>
+        <strong>{{product.rpice}}</strong>
+        <div>
+            <button>Add Cart</button>
+        </div>
+    </div>
+</template>
+
+<script>
+    export default {
+        name: 'product',
+        data() {
+            return {
+                product: {}
+            }
+        },
+        created() {
+            let id = this.$route.params.id;
+            $.getJSON(`https://hplussport.com/api/products/id/${id}`)
+            .done(data => {this.product = data;})
+        }
+    };
+</script>
+
+<style scoped>
+    img {
+        width: 700px;
+        height: 700px;
+    }    
+</style>     
+```
+ProductListItem.vue
+```html
+<template>
+    <li>
+        <img :src="product.image">
+        <p><strong><router-link :to="`/products/${product.id}/`">{{product.name}}</router-link></strong></p>
+        <p>{{product.description}} <a @click="requestRemoval">Hide this item</a></p>
+    </li>
+</template>
+
+<script>
+    export default {
+        name: 'product-list-item',
+        props: ['product'],
+        methods: {
+            requestRemoval() {
+                this.$emit('remove');
+            }
+        }
+    };
+</script>
+
+<style scoped>
+    img {
+        float: left;
+        width: 300px;
+    }
+    li {
+        margin-bottom: 40px;
+        clear: both;
+    }
+</style>     
+```
+App.vue
+```html
+<template>
+  <router-view :products="theProducts" title="Shop our award-winning product line"></router-view>
+</template>
+
+<script>
+
+export default {
+  name: 'app',
+  data() {
+    return {
+      theProducts: []
+    };
+  },
+  created: function() {
+      $.getJSON('https://hplussport.com/api/products')
+          .done(data => {this.theProducts = data;});
+  }
+}
+</script>
+```
+main.js
+```js
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+import App from './App.vue'
+import ProductList from './ProductList.vue'
+import Product from './Product.vue'
+
+Vue.use(VueRouter);
+
+const routes = [{
+        path: '/',
+        redirect: '/products'
+    },
+    {
+        path: '/',
+        component: ProductList
+    },
+    {
+        path: '/products/:id',
+        component: Product
+    }
+];
+
+const router = new VueRouter({
+    routes
+});
+
+new Vue({
+    el: '#app',
+    router,
+    render: h => h(App)
+})
 ```
 
-```
-
-Ref 
-- http://tutorialzine.com/2016/08/building-your-first-app-with-vue-js/
-- https://medium.com/codingthesmartway-com-blog/vue-js-2-vue-resource-real-world-vue-application-with-external-api-access-c3de83f25c00
-- https://scotch.io/tutorials/build-a-to-do-app-with-vue-js-2
-- https://laracasts.com/series/learn-vue-2-step-by-step

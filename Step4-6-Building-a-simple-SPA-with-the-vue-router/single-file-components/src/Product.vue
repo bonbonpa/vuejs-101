@@ -1,7 +1,7 @@
 <template>
     <div>
         <h2><strong>{{product.name}}</strong></h2>
-        <router-link :to="/products">Back to all products </router-link>
+        <router-link to="/products">Back to all products </router-link>
         <img :src="product.image">
         <p>{{product.description}} </p>
         <strong>{{product.rpice}}</strong>
