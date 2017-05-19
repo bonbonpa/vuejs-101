@@ -1,6 +1,9 @@
 import Vue from 'vue'
-import VueReouter from 'vue-router'
+import VueRouter from 'vue-router'
 import App from './App.vue'
+import ProductList from './ProductList.vue'
+
+Vue.use(VueRouter);
 
 const routes = [{
         path: '/',
@@ -10,9 +13,10 @@ const routes = [{
     //     path: '/products/:id',
     //     component: Product
     // }
+
 ];
 
-const router = new VueReouter({
+const router = new VueRouter({
     routes
 });
 

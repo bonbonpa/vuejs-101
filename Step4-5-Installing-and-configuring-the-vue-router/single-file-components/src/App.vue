@@ -1,9 +1,9 @@
 <template>
-  <product-list :products="theProducts" title="Shop our award-winning product line"></product-list>
+  <router-view :products="theProducts" title="Shop our award-winning product line"></router-view>
 </template>
 
 <script>
-import ProductList from './ProductList.vue';
+//import ProductList from './ProductList.vue';
 
 export default {
   name: 'app',
