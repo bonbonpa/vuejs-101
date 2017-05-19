@@ -1189,7 +1189,58 @@ install vue-router
 ```sh
 $ npm install vue-router --save
 ```
+main.js
+```js
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+import App from './App.vue'
+import ProductList from './ProductList.vue'
 
+Vue.use(VueRouter);
+
+const routes = [{
+        path: '/',
+        component: ProductList
+    },
+    // {
+    //     path: '/products/:id',
+    //     component: Product
+    // }
+
+];
+
+const router = new VueRouter({
+    routes
+});
+
+new Vue({
+    el: '#app',
+    router,
+    render: h => h(App)
+})
+```
+App.vue
+```html
+<template>
+  <router-view :products="theProducts" title="Shop our award-winning product line"></router-view>
+</template>
+
+<script>
+
+export default {
+  name: 'app',
+  data() {
+    return {
+      theProducts: []
+    };
+  },
+  created: function() {
+      $.getJSON('https://hplussport.com/api/products')
+          .done(data => {this.theProducts = data;});
+  }
+}
+</script>
+```
 ## 4-6 Bulidding a simple SPA with the vue-router
 
 Ref 

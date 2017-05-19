@@ -3,7 +3,6 @@
 </template>
 
 <script>
-//import ProductList from './ProductList.vue';
 
 export default {
   name: 'app',
@@ -11,9 +10,6 @@ export default {
     return {
       theProducts: []
     };
-  },
-  components: {
-    'product-list': ProductList
   },
   created: function() {
       $.getJSON('https://hplussport.com/api/products')
