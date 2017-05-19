@@ -1243,6 +1243,10 @@ export default {
 ```
 ## 4-6 Bulidding a simple SPA with the vue-router
 
+```
+
+```
+
 Ref 
 - http://tutorialzine.com/2016/08/building-your-first-app-with-vue-js/
 - https://medium.com/codingthesmartway-com-blog/vue-js-2-vue-resource-real-world-vue-application-with-external-api-access-c3de83f25c00
